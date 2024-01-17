@@ -1,113 +1,188 @@
-import Image from 'next/image';
+'use client';
+import { Box, Button } from "@mui/material";
+import { MyButton } from "../components/MyButton";
+import Stack from '@mui/material/Stack';
+import Item from '@mui/material/Stack';
+import confetti from 'canvas-confetti'
+import React, { useRef, useState } from 'react';
 
 export default function Home() {
+
+  const randomConfetti = () => {
+    console.log("xxxx")
+    confetti({
+      particleCount: 100,
+      startVelocity: 30,
+      spread: 360,
+      origin: {
+        x: Math.random(),
+        // since they fall down, start a bit higher than random
+        y: Math.random() - 0.2
+      }
+    });
+  };
+  /**
+   * パイナップル
+   */
+  const handleButton1 = () => {
+    var scalar = 3;
+    var pineapple = confetti.shapeFromText({ text: '🍍', scalar });
+    confetti({
+      particleCount: 100,
+      startVelocity: 30,
+      scalar: scalar,
+      shapes: [pineapple, 'circle'],
+      spread: 360,
+      origin: {
+        x: Math.random(),
+        // since they fall down, start a bit higher than random
+        y: Math.random() - 0.2
+      }
+    });
+
+  };
+  /**
+   * 座標を指定
+   */
+  const buttonRef2 = useRef<HTMLButtonElement>(null);
+  const handleButton2 = () => {
+    let centerX: number = 0
+    let centerY: number = 0
+    if (buttonRef2.current) {
+      const rect = buttonRef2.current!.getBoundingClientRect();
+      centerX = rect.x + rect.width / 2;
+      centerY = rect.y + rect.height / 2;
+      console.log('Center X:', centerX, 'Center Y:', centerY);
+    }
+    // console.log("横幅:", windowWidth, " ", window.innerWidth)
+    // console.log("エックス：", centerX, " ", Math.random())
+    // console.log("ワイ", centerY)
+    confetti({
+      particleCount: 100,
+      startVelocity: 30,
+      //scalar: scalar,
+      spread: 180,
+      origin: {
+        x: centerX / window.innerWidth,
+        y: centerY / window.innerHeight
+      }
+    });
+  };
+  const buttonRef3 = useRef<HTMLButtonElement>(null);
+  const handleButton3 = () => {
+    var triangle = confetti.shapeFromPath({ path: 'M0 10 L5 0 L10 10z' });
+
+    let centerX: number = 0
+    let centerY: number = 0
+    if (buttonRef3.current) {
+      const rect = buttonRef3.current!.getBoundingClientRect();
+      centerX = rect.x + rect.width / 2;
+      centerY = rect.y + rect.height / 2;
+      console.log('Center X:', centerX, 'Center Y:', centerY);
+    }
+    confetti({
+      // パーティクルの数（デフォルト50)
+      particleCount: 100,
+      // 発射角度(デフォルト90度)
+      angle: 90,
+      // 発射範囲(デフォルト45度)
+      spread: 60,
+      // 発射速度 (default: 45)
+      startVelocity: 20,
+      // 失速具合 デフォルト0.9
+      //decay:0.9,
+      //重力 (0-1)
+      gravity: 0.6,
+      // default:0 数値を上げると横に流れる
+      drift: 0,
+      // default:false
+      // confettiが動く長さ (default: 200)
+      ticks: 100,
+      origin: {
+        x: centerX / window.innerWidth,
+        y: centerY / window.innerHeight
+      },
+      // 紙吹雪の色を指定。配列でいくつも指定できる
+      colors: ['#234343', '#ffffff', '#990000'],
+      // 紙吹雪の形を指定
+      shapes: ['square', 'circle', triangle],
+      // 紙吹雪のサイズを指定
+      scalar: 0.8,
+      // z-indexを指定(default:100)
+      zIndex: 100
+    });
+  };
+
   return (
-    <main className="flex min-h-screen flex-col items-center justify-between p-24">
-      <div className="z-10 max-w-5xl w-full items-center justify-between font-mono text-sm lg:flex">
-        <p className="fixed left-0 top-0 flex w-full justify-center border-b border-gray-300 bg-gradient-to-b from-zinc-200 pb-6 pt-8 backdrop-blur-2xl dark:border-neutral-800 dark:bg-zinc-800/30 dark:from-inherit lg:static lg:w-auto  lg:rounded-xl lg:border lg:bg-gray-200 lg:p-4 lg:dark:bg-zinc-800/30">
-          Get started by editijjjkkkng&nbsp;
-          <code className="font-mono font-bold">app/pakkke.tsjjjx</code>
-        </p>
-        <div className="fixed bottom-0 left-0 flex h-48 w-full items-end justify-center bg-gradient-to-t from-white via-white dark:from-black dark:via-black lg:static lg:h-auto lg:w-auto lg:bg-none">
-          <a
-            className="pointer-events-none flex place-items-center gap-2 p-8 lg:pointer-events-auto lg:p-0"
-            href="https://vercel.com?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            By{' '}
-            <Image
-              src="/vercel.svg"
-              alt="Vercel Logo"
-              className="dark:invert"
-              width={100}
-              height={24}
-              priority
-            />
-          </a>
-        </div>
-      </div>
+    <main >
+       <Stack
 
-      <div className="relative flex place-items-center before:absolute before:h-[300px] before:w-[480px] before:-translate-x-1/2 before:rounded-full before:bg-gradient-radial before:from-white before:to-transparent before:blur-2xl before:content-[''] after:absolute after:-z-20 after:h-[180px] after:w-[240px] after:translate-x-1/3 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] before:dark:bg-gradient-to-br before:dark:from-transparent before:dark:to-blue-700 before:dark:opacity-10 after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 before:lg:h-[360px] z-[-1]">
-        <Image
-          className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
-          src="/next.svg"
-          alt="Next.js Logo"
-          width={180}
-          height={37}
-          priority
-        />
-      </div>
+        //direction="row"
+        spacing={5}
+        justifyContent="center" // ボタンを水平方向に真ん中に寄せます
+        alignItems="center" // ボタンを垂直方向に真ん中に寄せます
+      >
+      {/* <MyButton /> */}
+      {/* <Button variant="text">Text</Button>
+      <Button variant="contained">Contained</Button> */}
+    
+      <Stack
+        //direction="row"
 
-      <div className="mb-32 grid text-center lg:max-w-5xl lg:w-full lg:mb-0 lg:grid-cols-4 lg:text-left">
-        <a
-          href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Docs{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Find in-depth information about Next.js features and API.
-          </p>
-        </a>
+        spacing={5}
+        justifyContent="center" // ボタンを水平方向に真ん中に寄せます
+        alignItems="center" // ボタンを垂直方向に真ん中に寄せます
+      >
+          <Box sx={{ padding: '15px' }}>
+       
+       場所を指定して
+     
+   </Box>
+        <Item>
+          <Button onClick={handleButton1} variant="outlined" sx={{}}>
+            Outlined
+          </Button>
+        </Item>
+        <Item>
+          <Button variant="outlined" onClick={handleButton2} ref={buttonRef2}>
+            小さくパーン</Button>
+        </Item>
+        <Item>
+          <Button variant="outlined" onClick={handleButton3} ref={buttonRef3} >大きくパーン</Button>
+        </Item>
+        <Item>
+          <Button variant="outlined" >全体にパーン</Button>
+        </Item>
+        <Item>
+          <Button variant="outlined" onClick={randomConfetti} >ランダムにパーン</Button>
+        </Item>
+      </Stack>
 
-        <a
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Learn{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Learn about Next.js in an interactive course with&nbsp;quizzes!
-          </p>
-        </a>
 
-        <a
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Templates{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Explore the Next.js 13 playground.
-          </p>
-        </a>
+      <Box sx={{ padding: '15px' }}>
+        <h2>
+全体に紙吹雪を出力        </h2>
+      </Box>
+      <Stack
+        //direction="row"
+        spacing={5}
+        justifyContent="center" // ボタンを水平方向に真ん中に寄せます
+        alignItems="center" // ボタンを垂直方向に真ん中に寄せます
+      >
+          
+        <Item>
+          <Button variant="outlined" onClick={handleButton3} ref={buttonRef3} >大きくパーン</Button>
+        </Item>
+        <Item>
+          <Button variant="outlined" >全体にパーン</Button>
+        </Item>
+        <Item>
+          <Button variant="outlined" onClick={randomConfetti} >ランダムにパーン</Button>
+        </Item>
+      </Stack>
 
-        <a
-          href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template&utm_campaign=create-next-app"
-          className="group rounded-lg border border-transparent px-5 py-4 transition-colors hover:border-gray-300 hover:bg-gray-100 hover:dark:border-neutral-700 hover:dark:bg-neutral-800/30"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <h2 className={`mb-3 text-2xl font-semibold`}>
-            Deploy{' '}
-            <span className="inline-block transition-transform group-hover:translate-x-1 motion-reduce:transform-none">
-              -&gt;
-            </span>
-          </h2>
-          <p className={`m-0 max-w-[30ch] text-sm opacity-50`}>
-            Instantly deploy your Next.js site to a shareable URL with Vercel.
-          </p>
-        </a>
-      </div>
+      </Stack>
     </main>
+
   );
 }
