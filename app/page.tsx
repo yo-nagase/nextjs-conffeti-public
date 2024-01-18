@@ -168,17 +168,12 @@ export default function Home() {
         spacing={5}
         justifyContent="center" // ボタンを水平方向に真ん中に寄せます
         alignItems="center" // ボタンを垂直方向に真ん中に寄せます
-      >
-          
-        <Item>
-          <Button variant="outlined" onClick={handleButton3} ref={buttonRef3} >大きくパーン</Button>
-        </Item>
+      >   
+
         <Item>
           <Button variant="outlined" >全体にパーン</Button>
         </Item>
-        <Item>
-          <Button variant="outlined" onClick={randomConfetti} >ランダムにパーン</Button>
-        </Item>
+      
       </Stack>
 
       </Stack>
